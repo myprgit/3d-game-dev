@@ -291,9 +291,12 @@ public class HandgunScriptLPFP : MonoBehaviour
 		{
 			foreach (GameObject zombie in this.enemy)
 			{
-				if (Vector3.Distance(zombie.transform.position, this.transform.position) <= 3)
+				if (zombie.GetComponent<EnemyController>() != null)
 				{
-					zombie.GetComponent<EnemyController>().getHit = true;
+					if (Vector3.Distance(zombie.transform.position, this.transform.position) <= 3)
+					{
+						zombie.GetComponent<EnemyController>().getHit = true;
+					}
 				}
 			}
 			anim.Play("Knife Attack 1", 0, 0f);
@@ -303,9 +306,12 @@ public class HandgunScriptLPFP : MonoBehaviour
 		{
 			foreach (GameObject zombie in this.enemy)
 			{
-				if (Vector3.Distance(zombie.transform.position, this.transform.position) <= 3)
+				if (zombie.GetComponent<EnemyController>() != null)
 				{
-					zombie.GetComponent<EnemyController>().getHit = true;
+					if (Vector3.Distance(zombie.transform.position, this.transform.position) <= 3)
+					{
+						zombie.GetComponent<EnemyController>().getHit = true;
+					}
 				}
 			}
 			anim.Play("Knife Attack 2", 0, 0f);

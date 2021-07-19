@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FPSControllerLPFP
 {
@@ -69,6 +70,10 @@ namespace FPSControllerLPFP
         private readonly RaycastHit[] _groundCastResults = new RaycastHit[8];
         private readonly RaycastHit[] _wallCastResults = new RaycastHit[8];
 
+        public float health = 100;
+        public bool getHit = false;
+        public Text HpText;
+
         /// Initializes the FpsController on start.
         private void Start()
         {
@@ -85,6 +90,7 @@ namespace FPSControllerLPFP
             _velocityZ = new SmoothVelocity();
             Cursor.lockState = CursorLockMode.Locked;
             ValidateRotationRestriction();
+            HpText.text = health.ToString();
         }
 
         private Transform AssignCharactersCamera()
@@ -145,6 +151,13 @@ namespace FPSControllerLPFP
         private void Update()
         {
             arms.position = transform.position + transform.TransformVector(armPosition);
+            if(getHit)
+            {
+                health -= 10;
+                getHit = false;
+                HpText.text = health.ToString();
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Animator>().SetBool("shake", true);
+            }
             Jump();
             PlayFootstepSounds();
         }
