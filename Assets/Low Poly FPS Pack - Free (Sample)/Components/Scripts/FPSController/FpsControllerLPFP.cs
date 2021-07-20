@@ -198,6 +198,7 @@ namespace FPSControllerLPFP
                 Time.timeScale = 0f;
                 winLoseObj.SetActive(true);
                 goToMainObj.SetActive(true);
+                restartObj.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 winLose.text = "YOU LOST :(";
