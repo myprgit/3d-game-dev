@@ -30,11 +30,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(this.name == "ZombieX")
         {
-            health = 300;
-        }
-        else
-        {
-            health = 99;
+            health = 3000;
         }
         
         anim.SetFloat("speed", 1f);
