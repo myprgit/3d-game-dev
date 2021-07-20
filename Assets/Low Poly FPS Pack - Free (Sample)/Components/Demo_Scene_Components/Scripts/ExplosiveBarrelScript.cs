@@ -83,8 +83,13 @@ public class ExplosiveBarrelScript : MonoBehaviour
 
 			if (hit.transform.tag == "Enemy")
 			{
-				hit.transform.gameObject.GetComponent<EnemyController>().health = -10;
+				hit.transform.gameObject.GetComponent<EnemyController>().health -= 100;
 				hit.transform.gameObject.GetComponent<EnemyController>().getHit = true;
+			}
+			if (hit.transform.tag == "Player")
+			{
+				hit.transform.gameObject.GetComponent<FPSControllerLPFP.FpsControllerLPFP>().health -= 10;
+				hit.transform.gameObject.GetComponent<FPSControllerLPFP.FpsControllerLPFP>().getHit = true;
 			}
 		}
 

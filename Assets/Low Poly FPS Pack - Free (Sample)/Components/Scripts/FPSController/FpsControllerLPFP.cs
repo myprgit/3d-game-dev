@@ -73,7 +73,17 @@ namespace FPSControllerLPFP
         public float health = 100;
         public bool getHit = false;
         public Text HpText;
+        private GameObject winLoseObj;
+        private GameObject goToMainObj;
+        private GameObject restartObj;
+        public Text winLose;
 
+        private void Awake()
+        {
+            winLoseObj = GameObject.Find("WinLose");
+            goToMainObj = GameObject.Find("GoToMainMenu");
+            restartObj = GameObject.Find("Restart");
+        }
         /// Initializes the FpsController on start.
         private void Start()
         {
@@ -90,7 +100,12 @@ namespace FPSControllerLPFP
             _velocityZ = new SmoothVelocity();
             Cursor.lockState = CursorLockMode.Locked;
             ValidateRotationRestriction();
-            HpText.text = health.ToString();
+            Debug.Log(PlayerPrefs.GetFloat("Sound"));
+            AudioListener.volume = PlayerPrefs.GetFloat("Sound");
+            if(HpText != null)
+            {
+                HpText.text = health.ToString();
+            }
         }
 
         private Transform AssignCharactersCamera()
@@ -151,6 +166,43 @@ namespace FPSControllerLPFP
         private void Update()
         {
             arms.position = transform.position + transform.TransformVector(armPosition);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (winLose.text == "Pause (Press ESC again to Resume)")
+                {
+                    Time.timeScale = 1f;
+                    winLoseObj.SetActive(false);
+                    goToMainObj.SetActive(false);
+                    restartObj.SetActive(false);
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    winLose.text = "";
+                }
+                else
+                {
+                    Time.timeScale = 0f;
+                    winLoseObj.SetActive(true);
+                    goToMainObj.SetActive(true);
+                    restartObj.SetActive(true);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    winLose.text = "Pause (Press ESC again to Resume)";
+                }
+                if(HpText != null)
+                {
+                    HpText.text = health.ToString();
+                }
+            }
+            if (health <= 0)
+            {
+                Time.timeScale = 0f;
+                winLoseObj.SetActive(true);
+                goToMainObj.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                winLose.text = "YOU LOST :(";
+                HpText.text = health.ToString();
+            }
             if(getHit)
             {
                 health -= 10;
